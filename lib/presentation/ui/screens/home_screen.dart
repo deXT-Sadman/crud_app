@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: 210,
+              height: 270,
               width: double.infinity,
               child: Card(
                 color: Colors.grey.shade300,
@@ -56,6 +56,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         productTitle: "Total Price: Asus",
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+                          SizedBox(width: 5),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.delete),
+                          ),
+                        ],
                       ),
                     ],
                   ),
