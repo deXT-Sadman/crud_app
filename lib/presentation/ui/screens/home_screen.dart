@@ -1,3 +1,4 @@
+import 'package:crud_app/presentation/ui/widgets/product_info.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,47 +27,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Product Name: Asus",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      ProductInfo(
+                        productTitle: "Product Name: Asus",
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Text(
-                        "Product Code: Asus",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      ProductInfo(
+                        productTitle: "Product Code: Asus",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Text(
-                        "Img: something",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      ProductInfo(
+                        productTitle: "IMG: Asus",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Text(
-                        "QTY: something",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      ProductInfo(
+                        productTitle: "Qty: Asus",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Text(
-                        "Unit Price: Something",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      ProductInfo(
+                        productTitle: "Unit Price: Asus",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Text(
-                        "Total Price: Something",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      ProductInfo(
+                        productTitle: "Total Price: Asus",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
                       ),
                     ],
                   ),
