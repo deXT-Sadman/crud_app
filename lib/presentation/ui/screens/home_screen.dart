@@ -1,3 +1,4 @@
+import 'package:crud_app/presentation/ui/screens/add_product_screen.dart';
 import 'package:crud_app/presentation/ui/widgets/product_info.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Todo"), backgroundColor: Colors.amberAccent),
+      appBar: AppBar(
+        title: Text("CRUD APP"),
+        backgroundColor: Colors.amberAccent,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Column(
@@ -76,6 +80,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddProductScreen()),
+          );
+        },
+        backgroundColor: Colors.amber,
+        foregroundColor: Colors.black,
+        child: Icon(Icons.add),
       ),
     );
   }
