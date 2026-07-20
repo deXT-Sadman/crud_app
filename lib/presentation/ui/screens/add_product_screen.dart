@@ -25,6 +25,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _productTotalPriceController =
       TextEditingController();
 
+  @override
+  void dispose() {
+    _productNameController.dispose();
+    _productCodeController.dispose();
+    _imgController.dispose();
+    _qtyController.dispose();
+    _productUnitPriceController.dispose();
+    _productTotalPriceController.dispose();
+    super.dispose();
+  }
+
   void addProduct() async {
     inProgress = true;
     setState(() {});
@@ -129,6 +140,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     addProduct();
+                    setState(() {});
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amberAccent,

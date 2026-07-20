@@ -20,6 +20,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Client http = Client();
   ProductModel productModel = ProductModel();
 
+  @override
+  void initState() {
+    super.initState();
+    getAllProduct();
+  }
+
   void getAllProduct() async {
     inProgress = true;
     setState(() {});
@@ -43,12 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
       TextEditingController();
   final TextEditingController _productTotalPriceController =
       TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    getAllProduct();
-  }
 
   @override
   Widget build(BuildContext context) {
