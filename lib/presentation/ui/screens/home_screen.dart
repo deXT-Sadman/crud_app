@@ -26,12 +26,39 @@ class _HomeScreenState extends State<HomeScreen> {
     getAllProduct();
   }
 
+  @override
+  void dispose() {
+    _productNameController.dispose();
+    _productCodeController.dispose();
+    _imgController.dispose();
+    _qtyController.dispose();
+    _productUnitPriceController.dispose();
+    _productTotalPriceController.dispose();
+    http.close();
+    super.dispose();
+  }
+
   void getAllProduct() async {
     inProgress = true;
     setState(() {});
 
     Uri uri = Uri.parse(
       'https://crud-api-ostad-live.onrender.com/api/v1/ReadProduct',
+    );
+
+    Response response = await http.get(uri);
+    productModel = ProductModel.fromJson(jsonDecode(response.body));
+
+    inProgress = false;
+    setState(() {});
+  }
+
+  void deleteProduct(String productId) async {
+    inProgress = true;
+    setState(() {});
+
+    Uri uri = Uri.parse(
+      'https://crud-api-ostad-live.onrender.com/api/v1/DeleteProduct/$productId',
     );
 
     Response response = await http.get(uri);
@@ -252,7 +279,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     child: Text("No"),
                                                   ),
                                                   TextButton(
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      deleteProduct(
+                                                        productModel
+                                                                .data?[index]
+                                                                .sId ??
+                                                            "",
+                                                      );
+                                                      getAllProduct();
+                                                      Navigator.pop(context);
+                                                      ScaffoldMessenger.of(
+                                                        context,
+                                                      ).showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            "Product Deleted Successfully",
+                                                          ),
+                                                          backgroundColor:
+                                                              Colors.redAccent,
+                                                        ),
+                                                      );
+                                                    },
                                                     child: Text("Yes"),
                                                   ),
                                                 ],

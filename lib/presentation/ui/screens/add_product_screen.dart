@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:crud_app/data/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -15,6 +16,28 @@ class AddProductScreen extends StatefulWidget {
 class _AddProductScreenState extends State<AddProductScreen> {
   bool inProgress = false;
   Client http = Client();
+  ProductModel productModel = ProductModel();
+
+  void getAllProduct() async {
+    inProgress = true;
+    setState(() {});
+
+    Uri uri = Uri.parse(
+      'https://crud-api-ostad-live.onrender.com/api/v1/ReadProduct',
+    );
+
+    Response response = await http.get(uri);
+    productModel = ProductModel.fromJson(jsonDecode(response.body));
+
+    inProgress = false;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAllProduct();
+  }
 
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _productCodeController = TextEditingController();
@@ -33,6 +56,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _qtyController.dispose();
     _productUnitPriceController.dispose();
     _productTotalPriceController.dispose();
+    http.close();
     super.dispose();
   }
 
@@ -140,7 +164,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     addProduct();
-                    setState(() {});
+                    getAllProduct();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amberAccent,
