@@ -1,4 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
@@ -8,6 +13,9 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
+  bool inProgress = false;
+  Client http = Client();
+
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _productCodeController = TextEditingController();
   final TextEditingController _imgController = TextEditingController();
@@ -16,6 +24,46 @@ class _AddProductScreenState extends State<AddProductScreen> {
       TextEditingController();
   final TextEditingController _productTotalPriceController =
       TextEditingController();
+
+  void addProduct() async {
+    inProgress = true;
+    setState(() {});
+
+    Uri uri = Uri.parse(
+      'https://crud-api-ostad-live.onrender.com/api/v1/CreateProduct',
+    );
+
+    Response response = await http.post(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "ProductName": _productNameController.text.toString(),
+        "ProductCode": int.parse(_productCodeController.text),
+        "Img": _imgController.text.toString(),
+        "Qty": int.parse(_qtyController.text),
+        "UnitPrice": int.parse(_productUnitPriceController.text),
+        "TotalPrice": int.parse(_productTotalPriceController.text),
+      }),
+    );
+
+    final responseJson = jsonDecode(response.body);
+    inProgress = false;
+    setState(() {});
+
+    if (responseJson["status"] == "success") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Created Successfully"),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed!"), backgroundColor: Colors.redAccent),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +127,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    addProduct();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amberAccent,
                     foregroundColor: Colors.black,
