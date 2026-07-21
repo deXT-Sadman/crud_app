@@ -68,6 +68,45 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
   }
 
+  void UpdateProduct(String productId) async {
+    inProgress = true;
+    setState(() {});
+
+    Uri uri = Uri.parse(
+      'https://crud-api-ostad-live.onrender.com/api/v1/UpdateProduct/$productId',
+    );
+
+    Response response = await http.post(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "ProductName": _productNameController.text.toString(),
+        "ProductCode": int.parse(_productCodeController.text),
+        "Img": _imgController.text.toString(),
+        "Qty": int.parse(_qtyController.text),
+        "UnitPrice": int.parse(_productUnitPriceController.text),
+        "TotalPrice": int.parse(_productTotalPriceController.text),
+      }),
+    );
+
+    final responseJson = jsonDecode(response.body);
+    inProgress = false;
+    setState(() {});
+
+    if (responseJson["status"] == "success") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Created Successfully"),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed!"), backgroundColor: Colors.redAccent),
+      );
+    }
+  }
+
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _productCodeController = TextEditingController();
   final TextEditingController _imgController = TextEditingController();
@@ -165,91 +204,111 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                 ],
                                               ),
-                                              content: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  TextField(
-                                                    controller:
-                                                        _productNameController,
-                                                    decoration: InputDecoration(
-                                                      hintText: "Product Name",
-                                                      border:
-                                                          OutlineInputBorder(),
+                                              content: SingleChildScrollView(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    TextField(
+                                                      controller:
+                                                          _productNameController,
+                                                      decoration: InputDecoration(
+                                                        hintText:
+                                                            "Product Name",
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(height: 12),
-                                                  TextField(
-                                                    controller:
-                                                        _productCodeController,
-                                                    decoration: InputDecoration(
-                                                      hintText: "Product Code",
-                                                      border:
-                                                          OutlineInputBorder(),
+                                                    const SizedBox(height: 12),
+                                                    TextField(
+                                                      controller:
+                                                          _productCodeController,
+                                                      decoration: InputDecoration(
+                                                        hintText:
+                                                            "Product Code",
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(height: 12),
-                                                  TextField(
-                                                    controller: _imgController,
-                                                    decoration: InputDecoration(
-                                                      hintText: "Product Image",
-                                                      border:
-                                                          OutlineInputBorder(),
+                                                    const SizedBox(height: 12),
+                                                    TextField(
+                                                      controller:
+                                                          _imgController,
+                                                      decoration: InputDecoration(
+                                                        hintText:
+                                                            "Product Image",
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(height: 12),
-                                                  TextField(
-                                                    controller: _qtyController,
-                                                    decoration: InputDecoration(
-                                                      hintText: "Product QTY",
-                                                      border:
-                                                          OutlineInputBorder(),
+                                                    const SizedBox(height: 12),
+                                                    TextField(
+                                                      controller:
+                                                          _qtyController,
+                                                      decoration: InputDecoration(
+                                                        hintText: "Product QTY",
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(height: 12),
-                                                  TextField(
-                                                    controller:
-                                                        _productUnitPriceController,
-                                                    decoration: InputDecoration(
-                                                      hintText:
-                                                          "Product Unit Price",
-                                                      border:
-                                                          OutlineInputBorder(),
+                                                    const SizedBox(height: 12),
+                                                    TextField(
+                                                      controller:
+                                                          _productUnitPriceController,
+                                                      decoration: InputDecoration(
+                                                        hintText:
+                                                            "Product Unit Price",
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(height: 12),
-                                                  TextField(
-                                                    controller:
-                                                        _productTotalPriceController,
-                                                    decoration: InputDecoration(
-                                                      hintText:
-                                                          "Product Total Price",
-                                                      border:
-                                                          OutlineInputBorder(),
+                                                    const SizedBox(height: 12),
+                                                    TextField(
+                                                      controller:
+                                                          _productTotalPriceController,
+                                                      decoration: InputDecoration(
+                                                        hintText:
+                                                            "Product Total Price",
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(height: 12),
-                                                  SizedBox(
-                                                    width: double.infinity,
-                                                    child: ElevatedButton(
-                                                      onPressed: () {},
-                                                      style: ElevatedButton.styleFrom(
-                                                        backgroundColor:
-                                                            Colors.amberAccent,
-                                                        foregroundColor:
-                                                            Colors.black,
-                                                        shape: RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                8,
-                                                              ),
+                                                    const SizedBox(height: 12),
+                                                    SizedBox(
+                                                      width: double.infinity,
+                                                      child: ElevatedButton(
+                                                        onPressed: () {
+                                                          UpdateProduct(
+                                                            productModel
+                                                                    .data?[index]
+                                                                    .sId ??
+                                                                "",
+                                                          );
+                                                          getAllProduct();
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                        },
+                                                        style: ElevatedButton.styleFrom(
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .amberAccent,
+                                                          foregroundColor:
+                                                              Colors.black,
+                                                          shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  8,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        child: Text(
+                                                          "Update Product",
                                                         ),
                                                       ),
-                                                      child: Text(
-                                                        "Add Product",
-                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             );
                                           },
